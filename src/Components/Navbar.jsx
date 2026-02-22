@@ -42,7 +42,8 @@ const Navbar = () => {
         <div className="flex items-center gap-3">
           <Link
           to="/login"
-          className="hidden md:inline-block btn btn-sm bg-orange-500 hover:bg-orange-600 text-white text-xl border-none"
+          className="hidden md:inline-block btn btn-sm bg-orange-500 hover:bg-orange-600 text-white text-lg border-none"
+
           >
             Login
           </Link>

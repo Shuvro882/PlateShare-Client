@@ -6,7 +6,7 @@ const Footer = () => {
     <footer className="bg-yellow-100 text-black">
       
       {/* Main Footer */}
-      <div className="footer sm:footer-horizontal max-w-7xl mx-auto px-6 py-6 justify-between">
+      <div className="footer sm:footer-horizontal max-w-7xl mx-auto px-6 py-6 justify-between items-start">
 
         {/* Left Side */}
         <aside className="flex flex-col gap-3">
@@ -28,11 +28,11 @@ const Footer = () => {
 
         {/* Right Side */}
         <nav>
-          <h6 className="footer-title text-black pl-4">Social</h6>
+          <h6 className="footer-title font-bold pl-4 pt-2">Social</h6>
           <div className="flex items-center gap-4">
 
             {/* X (Twitter) */}
-            <a aria-label="X" className="hover:text-white transition">
+            <a aria-label="X" className="hover:text-orange-600 transition">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
@@ -43,7 +43,7 @@ const Footer = () => {
             </a>
 
             {/* YouTube */}
-            <a aria-label="YouTube" className="hover:text-white transition">
+            <a aria-label="YouTube" className="hover:text-orange-600 transition">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
@@ -54,7 +54,7 @@ const Footer = () => {
             </a>
 
             {/* Facebook */}
-            <a aria-label="Facebook" className="hover:text-white transition">
+            <a aria-label="Facebook" className="hover:text-orange-600 transition">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"

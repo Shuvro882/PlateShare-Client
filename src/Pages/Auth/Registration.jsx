@@ -4,9 +4,55 @@ import { IoEyeOff } from 'react-icons/io5';
 import { Link } from 'react-router';
 import MyContainer from '../../Components/MyContainer';
 import bgImages from '../../assets/bgImages.jpg';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '../../Firebase/firebase.config';
+import { toast } from 'react-toastify';
 
 const Registration = () => {
   const [show, setShow] = useState(false);
+
+  const handleRegister = (e) => {
+    e.preventDefault();
+    const name = e.target.name.value;
+    const image = e.target.image.value;
+    const email = e.target.email.value;
+    const password = e.target.password.value;
+    console.log('Register function start',{name,image,email,password});
+    
+  
+
+    const regExp = /^(?=.*[a-z])(?=.*[A-Z]).{6,}$/;
+    if(!regExp.test(password)) {
+      toast.error(
+        "Password must have at least one uppercase, one lowercase letter and be 6 characters long"
+  );
+  return;
+    }
+
+    createUserWithEmailAndPassword(auth, email, password)
+    .then(res=> {
+      console.log(res);
+      toast.success("Registration Successful");
+      
+    }).catch((e) => {
+      console.log(e.code);
+      if (e.code == "auth/email-already-in-use"){
+        toast.error("User already in exist in database.");
+      }else if (e.code === "auth/invalid-email") {
+      toast.error("Please enter a valid email address.");
+      }else if (e.code === "auth/operation-not-allowed") {
+      toast.error("Email/password accounts are not enabled.");
+
+    } else if (e.code === "auth/network-request-failed") {
+      toast.error("Network error. Check your internet connection.");
+
+    }
+      else{
+        toast.error(e.message);
+      }
+      
+    })
+  }
 
   return (
     <div
@@ -32,7 +78,8 @@ const Registration = () => {
           <div className="lg:w-1/2 flex justify-center">
             <div className="card w-full max-w-sm bg-orange-50/90 backdrop-blur shadow-2xl border border-orange-300">
               <div className="card-body">
-                <form className="space-y-3">
+                
+                <form onSubmit={handleRegister} className="space-y-3">
 
                   <div>
                     <label className="label font-semibold text-orange-500">Name</label>
@@ -48,7 +95,7 @@ const Registration = () => {
                     <label className="label font-semibold text-orange-500">Photo URL</label>
                     <input
                       type="text"
-                      name="photo"
+                      name="image"
                       placeholder="Photo URL"
                       className="input input-bordered w-full border-orange-300 focus:border-orange-500"
                     />
@@ -80,7 +127,7 @@ const Registration = () => {
                     </span>
                   </div>
 
-                  <button className="btn w-full bg-orange-500 hover:bg-orange-500 text-white font-semibold text-base mt-2">
+                  <button className="my-btn">
                     Register
                   </button>
 

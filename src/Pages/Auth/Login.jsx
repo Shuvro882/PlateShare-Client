@@ -4,9 +4,59 @@ import { IoEyeOff } from 'react-icons/io5';
 import { Link } from 'react-router';
 import MyContainer from '../../Components/MyContainer';
 import bgImages from '../../assets/bgImages.jpg';
+import { GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup, signOut } from 'firebase/auth';
+import { auth } from '../../Firebase/firebase.config';
+import { toast } from 'react-toastify';
+
+
+const googleProvider = new GoogleAuthProvider();
 
 const Login = () => {
+
+    const [user, setUser] = useState(null);
     const [show, setShow] = useState(false);
+    const handleLogin = (e) =>{
+      e.preventDefault();
+      const email = e.target.email.value;
+    const password = e.target.password.value;
+
+    console.log( email,password)
+    signInWithEmailAndPassword(auth, email, password)
+    .then((res) => {
+      console.log(res);
+      setUser(res.user);
+      toast.success("Login successful");
+    })
+    .catch((e) => {
+      toast.error(e.message);
+    });
+    }
+    
+    const handleGoogleLogin = () =>{
+      signInWithPopup(auth, googleProvider)
+      .then((res) => {
+      console.log(res);
+      setUser(res.user);
+      toast.success("Login successful");
+    })
+    .catch((e) => {
+      toast.error(e.message);
+    });
+    };
+
+
+    const handleSignout = () => {
+        signOut(auth).then(() =>{
+          toast.success("Logout successful");
+          setUser(null);
+        })
+        .catch((e) => {
+          toast.error(e.message)
+        });
+    }
+    
+    console.log(user);
+    
     return (
         <div
       className="min-h-screen flex items-center justify-center font-sans text-base bg-cover bg-center relative"
@@ -31,7 +81,15 @@ const Login = () => {
           <div className="lg:w-1/2 flex justify-center">
             <div className="card w-full max-w-sm bg-orange-50/90 backdrop-blur shadow-2xl border border-orange-300">
               <div className="card-body">
-                <form className="space-y-3">
+                {
+                  user ? (
+                    <div>
+                      <h2>{user.displayName}</h2>
+                      <p>{user.email}</p>
+                      <button onClick={handleSignout} className='my-btn'>Log Out</button>
+                    </div>
+                  ) : (
+                    <form onSubmit={handleLogin} className="space-y-3">
 
 
                   <div>
@@ -60,8 +118,27 @@ const Login = () => {
                     </span>
                   </div>
 
-                  <button className="btn w-full bg-orange-500 hover:bg-orange-500 text-white font-semibold text-base mt-2">
+                  <button className="my-btn">
                     Login
+                  </button>
+
+                  {/* Divider */}
+                  <div className="flex items-center justify-center gap-2 my-2">
+                    <div className="h-px w-16 bg-gray-400"></div>
+                    <span className="text-sm text-gray-500">or</span>
+                    <div className="h-px w-16 bg-gray-400"></div>
+                  </div>
+
+                  {/* Google */}
+                  <button 
+                  onClick={handleGoogleLogin}
+                  className="flex items-center justify-center gap-2 w-full bg-white border border-orange-300 focus:border-orange-500 text-gray-800 py-2 font-semibold hover:bg-gray-200 rounded-sm cursor-pointer">
+                    <img
+                      src="https://www.svgrepo.com/show/475656/google-color.svg"
+                      alt="google"
+                      className="w-5 h-5"
+                    />
+                    Continue with Google
                   </button>
 
                   <p className="text-center font-semibold text-sm">
@@ -72,6 +149,8 @@ const Login = () => {
                   </p>
 
                 </form>
+                  )
+                }
               </div>
             </div>
           </div>

@@ -1,2 +1,14 @@
 @import "tailwindcss";
 @plugin "daisyui";
+
+body {
+  font-family: 'Poppins', sans-serif;
+}
+
+.my-btn {
+  @apply btn w-full bg-orange-500 hover:bg-orange-500 text-white font-semibold text-base mt-2;
+}
+
+.inp-btn{
+  @apply w-full border border-orange-300 focus:border-orange-500;
+}
