@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { FaEye } from 'react-icons/fa';
 import { IoEyeOff } from 'react-icons/io5';
 import { Link } from 'react-router';
@@ -7,24 +7,34 @@ import bgImages from '../../assets/bgImages.jpg';
 import { GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup, signOut } from 'firebase/auth';
 import { auth } from '../../Firebase/firebase.config';
 import { toast } from 'react-toastify';
+import { AuthContext } from '../../Context/AuthContext';
 
 
-const googleProvider = new GoogleAuthProvider();
+
 
 const Login = () => {
-
-    const [user, setUser] = useState(null);
     const [show, setShow] = useState(false);
+
+    const {
+      signInWithEmailAndPasswordFunc,
+      signinWithEmailFunc,
+      user,
+      setUser,
+      setLoading
+
+    } = useContext(AuthContext)
+
     const handleLogin = (e) =>{
       e.preventDefault();
       const email = e.target.email.value;
-    const password = e.target.password.value;
+      const password = e.target.password.value;
+      console.log( email,password);
 
-    console.log( email,password)
-    signInWithEmailAndPassword(auth, email, password)
+    signInWithEmailAndPasswordFunc(email, password)
     .then((res) => {
       console.log(res);
       setUser(res.user);
+      setLoading(false);
       toast.success("Login successful");
     })
     .catch((e) => {
@@ -33,10 +43,11 @@ const Login = () => {
     }
     
     const handleGoogleLogin = () =>{
-      signInWithPopup(auth, googleProvider)
+      signinWithEmailFunc()
       .then((res) => {
       console.log(res);
       setUser(res.user);
+      setLoading(false);
       toast.success("Login successful");
     })
     .catch((e) => {
@@ -45,15 +56,7 @@ const Login = () => {
     };
 
 
-    const handleSignout = () => {
-        signOut(auth).then(() =>{
-          toast.success("Logout successful");
-          setUser(null);
-        })
-        .catch((e) => {
-          toast.error(e.message)
-        });
-    }
+    
     
     console.log(user);
     
@@ -78,17 +81,11 @@ const Login = () => {
           </div>
 
           {/* Right Section */}
-          <div className="lg:w-1/2 flex justify-center">
+          <div className="lg:w-1/2 flex justify-center mb-20 lg:mb-0">
             <div className="card w-full max-w-sm bg-orange-50/90 backdrop-blur shadow-2xl border border-orange-300">
               <div className="card-body">
-                {
-                  user ? (
-                    <div>
-                      <h2>{user.displayName}</h2>
-                      <p>{user.email}</p>
-                      <button onClick={handleSignout} className='my-btn'>Log Out</button>
-                    </div>
-                  ) : (
+                
+                   
                     <form onSubmit={handleLogin} className="space-y-3">
 
 
@@ -149,8 +146,8 @@ const Login = () => {
                   </p>
 
                 </form>
-                  )
-                }
+                  
+                
               </div>
             </div>
           </div>

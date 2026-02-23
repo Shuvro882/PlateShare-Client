@@ -1,23 +1,27 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { FaEye } from 'react-icons/fa';
 import { IoEyeOff } from 'react-icons/io5';
-import { Link } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 import MyContainer from '../../Components/MyContainer';
 import bgImages from '../../assets/bgImages.jpg';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '../../Firebase/firebase.config';
 import { toast } from 'react-toastify';
+import { AuthContext } from '../../Context/AuthContext';
 
 const Registration = () => {
   const [show, setShow] = useState(false);
+  const { createUserWithEmailAndPasswordFunc,
+    updateProfileFunc,
+    setLoading,
+   } = useContext(AuthContext);
+   const navigate = useNavigate();
 
   const handleRegister = (e) => {
     e.preventDefault();
-    const name = e.target.name.value;
-    const image = e.target.image.value;
+    const displayName = e.target.name.value;
+    const photoURL = e.target.image.value;
     const email = e.target.email.value;
     const password = e.target.password.value;
-    console.log('Register function start',{name,image,email,password});
+    console.log('Register function start',{displayName,photoURL,email,password});
     
   
 
@@ -29,12 +33,21 @@ const Registration = () => {
   return;
     }
 
-    createUserWithEmailAndPassword(auth, email, password)
-    .then(res=> {
-      console.log(res);
-      toast.success("Registration Successful");
-      
-    }).catch((e) => {
+    createUserWithEmailAndPasswordFunc(email, password)
+    .then((res)=> {
+       updateProfileFunc({
+        displayName,
+        photoURL,
+      })
+      .then(() => {
+        setLoading(false);
+        toast.success("Registration successful");
+        navigate("/");
+      })
+      .catch((e) => {
+        toast.error(e.message);
+      });
+      }).catch((e) => {
       console.log(e.code);
       if (e.code == "auth/email-already-in-use"){
         toast.error("User already in exist in database.");
@@ -75,7 +88,7 @@ const Registration = () => {
           </div>
 
           {/* Right Section */}
-          <div className="lg:w-1/2 flex justify-center">
+          <div className="lg:w-1/2 flex justify-center mb-20 lg:mb-0">
             <div className="card w-full max-w-sm bg-orange-50/90 backdrop-blur shadow-2xl border border-orange-300">
               <div className="card-body">
                 

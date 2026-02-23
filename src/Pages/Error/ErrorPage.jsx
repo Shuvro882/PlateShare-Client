@@ -13,7 +13,7 @@ const ErrorPage = () => {
           className="w-64 mx-auto mb-2"
         />
 
-        <Link to="/" className="btn text-white bg-orange-500 mt-6">
+        <Link to="/" className="my-btn">
           Go Back Home
         </Link>
       </div>
