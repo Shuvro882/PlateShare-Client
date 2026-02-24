@@ -29,13 +29,13 @@ const AuthProvider = ({children}) => {
     return signOut(auth);
    };
 
-   const updateProfileFunc = (displayName, photoURL) =>{
-    setLoading(true);
-    return updateProfile(auth.currentUser,{
-        displayName,
-        photoURL
-    })
-   }
+   const updateProfileFunc = ({ displayName, photoURL }) => {
+  setLoading(true);
+  return updateProfile(auth.currentUser, {
+    displayName,
+    photoURL
+  });
+};
 
 
 

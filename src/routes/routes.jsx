@@ -5,6 +5,10 @@ import Available from "../Pages/Foods/Available"
 import Registration from "../Pages/Auth/Registration";
 import Login from "../Pages/Auth/Login";
 import ErrorPage from "../Pages/Error/ErrorPage";
+import AddFood from "../Pages/Foods/AddFood";
+import PrivateRoute from "../PrivateRouter/privateRoute";
+import ManageFood from "../Pages/Foods/ManageFood";
+import MyFood from "../Pages/Foods/MyFood";
 
 
 
@@ -27,6 +31,18 @@ export const router = createBrowserRouter([
             {
                 path: "/Login",
                 element: <Login />
+            },
+            {
+                path: "/AddFood",
+                element: <PrivateRoute><AddFood /></PrivateRoute>
+            },
+            {
+                path: "/ManageFood",
+                element: <PrivateRoute><ManageFood /></PrivateRoute>
+            },
+            {
+                path: "/MyFood",
+                element: <PrivateRoute><MyFood /></PrivateRoute>
             },
             {
         path:'/*',

@@ -35,10 +35,7 @@ const Registration = () => {
 
     createUserWithEmailAndPasswordFunc(email, password)
     .then((res)=> {
-       updateProfileFunc({
-        displayName,
-        photoURL,
-      })
+       updateProfileFunc(displayName, photoURL)
       .then(() => {
         setLoading(false);
         toast.success("Registration successful");

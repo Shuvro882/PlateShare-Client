@@ -1,11 +1,10 @@
 import React, { useContext, useState } from 'react';
 import { FaEye } from 'react-icons/fa';
 import { IoEyeOff } from 'react-icons/io5';
-import { Link } from 'react-router';
+import { Link, useLocation, useNavigate } from 'react-router';
 import MyContainer from '../../Components/MyContainer';
 import bgImages from '../../assets/bgImages.jpg';
-import { GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup, signOut } from 'firebase/auth';
-import { auth } from '../../Firebase/firebase.config';
+import { GoogleAuthProvider } from 'firebase/auth';
 import { toast } from 'react-toastify';
 import { AuthContext } from '../../Context/AuthContext';
 
@@ -22,7 +21,16 @@ const Login = () => {
       setUser,
       setLoading
 
-    } = useContext(AuthContext)
+    } = useContext(AuthContext);
+
+    const location = useLocation();
+    const from = location.state || "/";
+    const navigate = useNavigate();
+
+    if(user){
+      navigate('/');
+      return;
+    }
 
     const handleLogin = (e) =>{
       e.preventDefault();
@@ -36,6 +44,7 @@ const Login = () => {
       setUser(res.user);
       setLoading(false);
       toast.success("Login successful");
+      navigate(from)
     })
     .catch((e) => {
       toast.error(e.message);
@@ -49,6 +58,7 @@ const Login = () => {
       setUser(res.user);
       setLoading(false);
       toast.success("Login successful");
+      navigate(from);
     })
     .catch((e) => {
       toast.error(e.message);
@@ -127,7 +137,8 @@ const Login = () => {
                   </div>
 
                   {/* Google */}
-                  <button 
+                  <button
+                  type='button' 
                   onClick={handleGoogleLogin}
                   className="flex items-center justify-center gap-2 w-full bg-white border border-orange-300 focus:border-orange-500 text-gray-800 py-2 font-semibold hover:bg-gray-200 rounded-sm cursor-pointer">
                     <img
