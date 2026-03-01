@@ -3,10 +3,10 @@ import share from "../assets/share.png";
 
 const Footer = () => {
   return (
-    <footer className="bg-yellow-100 text-black">
+    <footer className="bg-yellow-200 text-black">
       
       {/* Main Footer */}
-      <div className="footer sm:footer-horizontal max-w-7xl mx-auto px-6 py-6 justify-between items-start">
+      <div className="footer sm:footer-horizontal container mx-auto py-6 justify-between items-start">
 
         {/* Left Side */}
         <aside className="flex flex-col gap-3">
@@ -21,7 +21,7 @@ const Footer = () => {
         </span>
           </div>
 
-          <p className="text-sm text-black max-w-xs">
+          <p className="text-sm text-black max-w-xs px-2">
             Sharing food, spreading care.
           </p>
         </aside>
