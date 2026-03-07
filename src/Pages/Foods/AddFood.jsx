@@ -1,69 +1,140 @@
 import React, { useContext, useState } from 'react';
+import { AuthContext } from '../../Context/AuthContext';
+import { toast } from 'react-toastify';
+
 
 const AddFood = () => {
-
+  const { user } = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
 
-    return (
-        <div className="max-w-lg mx-auto my-5 p-6 bg-gray-300 shadow rounded-lg">
-      <h2 className="text-2xl font-bold mb-6 text-center">Add Food</h2>
+    const form = e.target;
 
-      <form className="space-y-4">
-        <input
-          type="text"
-          name="foodName"
-          placeholder="Food Name"
-          className="input input-bordered w-full rounded-full"
-          required
-        />
+    const foodData = {
+      food_name: form.foodName.value,
+      food_image: form.image.value,
+      food_quantity: form.quantity.value,
+      pickup_location: form.location.value,
+      expire_date: form.expireDate.value,
+      additional_notes: form.notes.value,
+      food_status: "Available",
+      created_at: new Date().toISOString(),
+      donator: {
+        name: user?.displayName,
+        email: user?.email,
+        image: user?.photoURL,
+      },
+    };
 
-        <input
-          type="file"
-          name="image"
-          className="file-input file-input-bordered w-full rounded-full"
-          required
-        />
+    try {
+      const res = await fetch('http://localhost:3000/food', {
+        method: 'POST',
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(foodData),
+      });
+      const data = await res.json();
 
-        <input
-          type="text"
-          name="quantity"
-          placeholder="Food Quantity (e.g. Serves 2 people)"
-          className="input input-bordered w-full rounded-full"
-          required
-        />
+      if (data.success) {
+        toast.success("Food added successfully 🍛");
+        form.reset();
+      }
+    } catch (err) {
+      console.error(err);
+      toast.error("Something went wrong");
+    } finally {
+      setLoading(false);
+    }
+  };
 
-        <input
-          type="text"
-          name="location"
-          placeholder="Pickup Location"
-          className="input input-bordered w-full rounded-full"
-          required
-        />
+  return (
+    <div className="max-w-lg mx-auto my-5 p-6 bg-gray-300 shadow rounded-lg">
+  <h2 className="text-2xl font-bold mb-6 text-center">Add Food</h2>
 
-        <input
-          type="date"
-          name="expireDate"
-          className="input input-bordered w-full rounded-full"
-          required
-        />
+  <form onSubmit={handleSubmit} className="space-y-4">
 
-        <textarea
-          name="notes"
-          placeholder="Additional Notes"
-          className="textarea textarea-bordered w-full "
-        ></textarea>
-
-        <button
-          type="submit"
-          disabled={loading}
-          className="btn bg-orange-500 rounded-full w-full"
-        >
-          {loading ? "Adding..." : "Add Food"}
-        </button>
-      </form>
+    {/* Food Name */}
+    <div>
+      <label className="font-medium">Food Name</label>
+      <input
+        type="text"
+        name="foodName"
+        placeholder="Enter food name"
+        className="input input-bordered w-full rounded-full mt-1"
+        required
+      />
     </div>
-    );
+
+    {/* Food Image */}
+    <div>
+      <label className="font-medium">Food Image URL (imgbb)</label>
+      <input
+        type="text"
+        name="image"
+        placeholder="Paste imgbb image URL"
+        className="input input-bordered w-full rounded-full mt-1"
+        required
+      />
+    </div>
+
+    {/* Quantity */}
+    <div>
+      <label className="font-medium">Food Quantity</label>
+      <input
+        type="text"
+        name="quantity"
+        placeholder="Serves 2 people"
+        className="input input-bordered w-full rounded-full mt-1"
+        required
+      />
+    </div>
+
+    {/* Location */}
+    <div>
+      <label className="font-medium">Pickup Location</label>
+      <input
+        type="text"
+        name="location"
+        placeholder="Enter pickup location"
+        className="input input-bordered w-full rounded-full mt-1"
+        required
+      />
+    </div>
+
+    {/* Expire Date */}
+    <div>
+      <label className="font-medium">Expire Date</label>
+      <input
+        type="date"
+        name="expireDate"
+        className="input input-bordered w-full rounded-full mt-1"
+        required
+      />
+    </div>
+
+    {/* Notes */}
+    <div>
+      <label className="font-medium">Additional Notes</label>
+      <textarea
+        name="notes"
+        placeholder="Write extra information"
+        className="textarea textarea-bordered w-full mt-1"
+      ></textarea>
+    </div>
+
+    <button
+      type="submit"
+      disabled={loading}
+      className="btn bg-orange-500 rounded-full w-full"
+    >
+      {loading ? "Adding..." : "Add Food"}
+    </button>
+
+  </form>
+</div>
+  );
 };
 
 export default AddFood;

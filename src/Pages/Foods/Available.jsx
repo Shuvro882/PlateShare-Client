@@ -1,32 +1,23 @@
 import React from 'react';
 import { useLoaderData } from 'react-router';
 import FoodCard from './FoodCard';
-import { ClimbingBoxLoader } from 'react-spinners';
 
 const Available = () => {
-   const foods = useLoaderData();
-   console.log(foods)
+  const foods = useLoaderData();
 
-
-    return (
-        <div className="max-w-7xl mx-auto px-4 py-10">
-            <h2 className="text-3xl font-bold text-center mb-8">
-        Available Foods
-      </h2>
+  return (
+    <div className="max-w-7xl mx-auto px-4 py-10">
+      <h2 className="text-3xl font-bold text-center mb-8">Available Foods</h2>
 
       {foods.length === 0 ? (
-        <p className="text-center text-gray-500">
-          No food available right now.
-        </p>
+        <p className="text-center text-gray-500">No food available right now.</p>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {foods.map(food => (
-            <FoodCard key={food._id} food={food} />
-          ))}
+          {foods.map(food => <FoodCard key={food._id} food={food} />)}
         </div>
       )}
-        </div>
-    );
+    </div>
+  );
 };
 
 export default Available;
