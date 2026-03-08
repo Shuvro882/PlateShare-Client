@@ -1,6 +1,6 @@
-import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "../../Context/AuthContext";
+import { useNavigate } from "react-router";
 
 const FoodCard = ({ food }) => {
   const {
@@ -17,8 +17,11 @@ const FoodCard = ({ food }) => {
   const navigate = useNavigate();
 
   const handleDetails = () => {
-    if (user) navigate(`/food/${_id}`);
-    else navigate("/login");
+    if (user) {
+      navigate(`/food-details/${_id}`);
+    } else {
+      navigate("/login");
+    }
   };
 
   return (
@@ -43,7 +46,7 @@ const FoodCard = ({ food }) => {
 
         <button
           onClick={handleDetails}
-          className="w-full mt-3 bg-orange-500 hover:bg-orange-600 text-white py-2 rounded-md font-medium"
+          className="btn w-full mt-3 bg-orange-500 hover:bg-orange-600 text-white py-2 rounded-md font-medium"
         >
           View Details
         </button>
