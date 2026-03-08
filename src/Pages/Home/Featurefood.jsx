@@ -28,7 +28,7 @@ const FeatureFood = ({food}) => {
       <div className="text-center mt-10">
         <button
           onClick={() => navigate("/available")}
-          className="btn btn-primary"
+          className="btn bg-orange-500 text-white"
         >
           Show All
         </button>

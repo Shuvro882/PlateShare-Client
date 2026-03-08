@@ -59,7 +59,7 @@ const Navbar = () => {
                 className="p-0 bg-transparent border-none outline-none"
               >
                 <img
-                  src={user.photoURL || "https://via.placeholder.com/40"}
+                  src={user?.photoURL || "https://i.ibb.co/4pDNDk1/avatar.png"}
                   alt="User"
                   className="h-10 w-10 rounded-full object-cover border-2 border-orange-500 cursor-pointer"
                 />

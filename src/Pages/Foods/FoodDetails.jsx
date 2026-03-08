@@ -8,7 +8,7 @@ const FoodDetails = () => {
    console.log(food)
 
     return (
-    <div className="max-w-5xl mx-auto p-6 min-h-screen">
+    <div className="max-w-5xl mx-auto my-4 p-6 min-h-screen bg-white rounded-lg shadow-lg">
 
       <div className="grid md:grid-cols-2 gap-8">
 
@@ -43,7 +43,9 @@ const FoodDetails = () => {
           </p>
 
           {/* Donator Info */}
+          <strong>Donator Information:</strong>
           <div className="flex items-center gap-3 mb-6">
+            
             <img
               src={food.donator?.image}
               alt={food.donator?.name}
