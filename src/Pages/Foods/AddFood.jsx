@@ -83,7 +83,7 @@ const AddFood = () => {
     <div>
       <label className="font-medium">Food Quantity</label>
       <input
-        type="text"
+        type="number"
         name="quantity"
         placeholder="Serves 2 people"
         className="input input-bordered w-full rounded-full mt-1"

@@ -20,7 +20,8 @@ export const router = createBrowserRouter([
         children: [
             {
                 index:true,
-                element:<Home />
+                element:<Home />,
+                loader: () => fetch("http://localhost:3000/food")
             },
             { path: "/available", 
               element:<Available />,

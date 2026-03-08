@@ -40,7 +40,7 @@ const FoodCard = ({ food }) => {
           <p className="text-sm font-medium">{donator?.name}</p>
         </div>
 
-        <p className="text-sm text-gray-600">🍛 {food_quantity}</p>
+        <p className="text-sm text-gray-600">🍛Serves {food_quantity} People</p>
         <p className="text-sm text-gray-600">📍 {pickup_location}</p>
         <p className="text-sm text-gray-600">⏰ Expires: {expire_date}</p>
 
