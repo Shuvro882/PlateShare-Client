@@ -1,6 +1,7 @@
 import React from 'react';
 import BannerImage from "../../assets/foodBan.webp"
 import MyContainer from '../../Components/MyContainer';
+import { Link } from 'react-router';
 
 const Banner = () => {
     return (
@@ -19,9 +20,9 @@ const Banner = () => {
           Donate your surplus food to those in need and help reduce food waste
           in your community.
         </p>
-        <button className="bg-orange-500 hover:bg-orange-600 px-5 py-2 md:px-6 md:py-3 rounded text-white font-semibold w-max">
+        <Link to="/available" className="btn bg-orange-500 hover:bg-orange-600 px-5 py-2 md:px-6 md:py-3 rounded text-white font-semibold w-max">
           View All Foods
-        </button>
+        </Link>
       </MyContainer>
     </div>
     );
