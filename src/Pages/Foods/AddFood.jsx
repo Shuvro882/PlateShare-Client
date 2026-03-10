@@ -30,7 +30,7 @@ const AddFood = () => {
     };
 
     try {
-      const res = await fetch('http://localhost:3000/food', {
+      const res = await fetch('https://plate-share-server-lake.vercel.app/food', {
         method: 'POST',
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(foodData),

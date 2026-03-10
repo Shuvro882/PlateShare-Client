@@ -13,7 +13,7 @@ const ManageFood = () => {
   useEffect(() => {
     if (!user) return;
 
-    fetch(`http://localhost:3000/my-foods?email=${user.email}`)
+    fetch(`https://plate-share-server-lake.vercel.app/my-foods?email=${user.email}`)
       .then(res => res.json())
       .then(data => setFoods(data));
   }, [user]);
@@ -35,7 +35,7 @@ const ManageFood = () => {
 
       if (result.isConfirmed) {
 
-        fetch(`http://localhost:3000/food/${_id}`, {
+        fetch(`https://plate-share-server-lake.vercel.app/food/${_id}`, {
           method: "DELETE"
         })
           .then(res => res.json())
@@ -85,7 +85,7 @@ const ManageFood = () => {
 
 
 
-    fetch(`http://localhost:3000/food/${selectedFood._id}`, {
+    fetch(`https://plate-share-server-lake.vercel.app/food/${selectedFood._id}`, {
 
       method: "PUT",
       headers: {

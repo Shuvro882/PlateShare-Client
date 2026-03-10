@@ -21,11 +21,11 @@ export const router = createBrowserRouter([
             {
                 index:true,
                 element:<Home />,
-                loader: () => fetch("http://localhost:3000/food")
+                loader: () => fetch("https://plate-share-server-lake.vercel.app/food")
             },
             { path: "/available", 
               element:<Available />,
-              loader: () => fetch('http://localhost:3000/food')
+              loader: () => fetch('https://plate-share-server-lake.vercel.app/food')
             },
             {
                 path: "/registration",
@@ -54,7 +54,7 @@ export const router = createBrowserRouter([
                     <FoodDetails />
                     </PrivateRoute>
                    ),
-                loader: ({params}) => fetch(`http://localhost:3000/food/${params.id}`)
+                loader: ({params}) => fetch(`https://plate-share-server-lake.vercel.app/food/${params.id}`)
             },
             {
              path:'/*',

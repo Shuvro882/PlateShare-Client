@@ -9,7 +9,7 @@ const MyFood = () => {
   useEffect(() => {
     if (!user) return;
 
-    fetch(`http://localhost:3000/my-food-requests?email=${user.email}`)
+    fetch(`https://plate-share-server-lake.vercel.app/my-food-requests?email=${user.email}`)
       .then((res) => res.json())
       .then((data) => setMyRequests(data))
       .catch((err) => console.error(err));

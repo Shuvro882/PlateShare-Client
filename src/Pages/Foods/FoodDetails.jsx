@@ -20,7 +20,7 @@ const FoodDetails = () => {
   // Fetch requests for this food (only owner sees)
   useEffect(() => {
     if (isOwner) {
-      fetch(`http://localhost:3000/foodRequests/${food._id}`)
+      fetch(`https://plate-share-server-lake.vercel.app/foodRequests/${food._id}`)
         .then((res) => res.json())
         .then((data) => {
           if (data.success) setRequests(data.requests);
@@ -49,7 +49,7 @@ const FoodDetails = () => {
     };
 
     try {
-      const res = await fetch("http://localhost:3000/foodRequests", {
+      const res = await fetch("https://plate-share-server-lake.vercel.app/foodRequests", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(requestData),
@@ -71,7 +71,7 @@ const FoodDetails = () => {
   // Accept / Reject handler
   const handleStatusChange = async (requestId, status) => {
     try {
-      const res = await fetch(`http://localhost:3000/foodRequests/${requestId}`, {
+      const res = await fetch(`https://plate-share-server-lake.vercel.app/foodRequests/${requestId}`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ status }),
@@ -128,7 +128,7 @@ const FoodDetails = () => {
           {/* Request Food Button */}
           {!isOwner && (
             <button
-              className="bg-green-600 text-white px-6 py-2 rounded hover:bg-green-700"
+              className="bg-orange-600 text-white px-6 py-2 rounded hover:bg-orange-700"
               onClick={() => setIsModalOpen(true)}
             >
               Request Food
@@ -189,7 +189,7 @@ const FoodDetails = () => {
                 </button>
                 <button
                   type="submit"
-                  className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
+                  className="bg-orange-600 text-white px-4 py-2 rounded hover:bg-orange-700"
                 >
                   Submit
                 </button>
